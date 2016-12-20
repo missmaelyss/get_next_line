@@ -40,8 +40,63 @@ printf("%s\n", tmp);
  return (2);
  }
  */
+t_fd	*gnl_new_fd(int fd)
+{
+	t_fd	*lst;
+
+	lst = (t_fd *)malloc(sizeof(t_fd) * 1);
+	(*lst).reste = NULL;
+	(*lst).fd = fd;
+	(*lst).next = NULL;
+	return (lst);
+}
+
 int	get_next_line(const int fd, char **line)
 {
+	static t_fd	*lst = NULL;
+	int		n;
+	int		i;
+
+	if (lst == NULL)
+		lst = gnl_new_fd(fd);
+	else
+	{
+		while ((*lst).fd != fd && (*lst).next != NULL)
+			lst++;
+		if ((*lst).fd != fd)
+		{
+			(*lst).next = gnl_new_fd(fd);
+			*lst = (*lst).next
+		}
+
+	}
+	while (ft_atoi(sto[p][0]) != fd && )
+	{
+
+	}
+	*line = (*lst).reste;
+	read(fd, buffer, BUFF_SIZE);
+	n = 0;
+	while(buffer[n] != '\n' && buffer[n] != '\0')
+	{
+		n++;
+		if (buffer[n] == '\0')
+		{
+			*line = ft_strjoin(*line, ft_strsub(buffer, 0, n - 1));
+			read(fd, buffer, BUFF_SIZE);
+			n = 0;
+		}
+		if (buffer[n] == '\n' && buffer[n + 1] != '\0')
+		{
+			i = n + 1;
+			while (buffer[i] != '\0')
+				i++;
+			(*lst).reste = ft_strsub(buffer, n + 1, (i - 1) - (n + 1));
+		}
+	}
+	return (1);
+}
+	/*{
 	char	buffer[BUFF_SIZE];
 	size_t	size;
 	size_t	n;
@@ -66,7 +121,8 @@ int	get_next_line(const int fd, char **line)
 
 		read(fd, buffer, BUFF_SIZE);
 
-//		printf("buffer = %s\nreste = %s\n", buffer, reste);
+		printf("buffer = %s\nreste = %s\n", buffer, reste);
+
 		size = 0;
 		n = 0;	
 		while (buffer[n] != '\n' && n < BUFF_SIZE && buffer[n] != '\0')
@@ -94,7 +150,7 @@ int	get_next_line(const int fd, char **line)
 //		printf("size = %d\ntmp = %s\nline = %s\nreste = %s\n", size, tmp, line, reste);	
 	}
 	return (1);
-}
+}*/
 
 int	main(int ac, char **av)
 {

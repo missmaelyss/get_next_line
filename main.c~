@@ -66,7 +66,7 @@ int	get_next_line(const int fd, char **line)
 
 		read(fd, buffer, BUFF_SIZE);
 
-//		printf("buffer = %s\nreste = %s\n", buffer, reste);
+		printf("buffer = %s\nreste = %s\n", buffer, reste);
 		size = 0;
 		n = 0;	
 		while (buffer[n] != '\n' && n < BUFF_SIZE && buffer[n] != '\0')
@@ -113,5 +113,6 @@ int	main(int ac, char **av)
 	printf("line : %s\n", *line);
 	get_next_line((const int)fd, line);
 	printf("line : %s\n", *line);
+	printf("%d\n", sizeof(t_fd));
 	return (0);
 }
