@@ -6,7 +6,7 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 13:48:06 by marnaud           #+#    #+#             */
-/*   Updated: 2017/01/09 16:16:16 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/01/09 16:50:31 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ void	fonction_1(char **line, t_fd *lst, const char *s, int i)
 {
 	size_t	n;
 	char	*tmp;
+	char	*tmp2;
 
 	n = 0;
 	while (s[n] != '\n' && s[n] != '\0')
 		n++;
 	if (i == 1)
-		tmp = ft_strjoin(lst->old, ft_strsub(s, 0, n));
+	{
+		tmp2 = ft_strsub(s, 0, n);
+		tmp = ft_strjoin(lst->old, tmp2);
+		free(tmp2);
+	}
 	else
 		tmp = ft_strsub(s, 0, n);
 	*line = ft_strdup(tmp);
