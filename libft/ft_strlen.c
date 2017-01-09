@@ -6,7 +6,7 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:14:47 by marnaud           #+#    #+#             */
-/*   Updated: 2016/11/12 16:05:19 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/01/09 15:11:09 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *str)
 	size_t n;
 
 	n = 0;
+	if (str == NULL)
+		return (n);
 	while (str[n] != 0)
 		n++;
 	return (n);

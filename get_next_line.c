@@ -6,7 +6,7 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 13:48:06 by marnaud           #+#    #+#             */
-/*   Updated: 2017/01/06 16:51:41 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/01/09 16:16:16 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,29 @@ void	fonction_1(char **line, t_fd *lst, const char *s, int i)
 	char	*tmp;
 
 	n = 0;
-	while (s[n] != '\n' && s[n])
+	while (s[n] != '\n' && s[n] != '\0')
 		n++;
 	if (i == 1)
-		*line = ft_strjoin(lst->old, ft_strsub(s, 0, n));
+		tmp = ft_strjoin(lst->old, ft_strsub(s, 0, n));
 	else
-		*line = ft_strsub(s, 0, n);
-	tmp = lst->old;
-	lst->old = ft_strdup(&(s[n + 1]));
+		tmp = ft_strsub(s, 0, n);
+	*line = ft_strdup(tmp);
+	free(tmp);
+	tmp = ft_strdup(&(s[n + 1]));
+	ft_strdel(&(lst->old));
+	if (i != 3)
+		lst->old = ft_strdup(tmp);
+	free(tmp);
+}
+
+void	save_join(t_fd *lst, char *buffer)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(lst->old, buffer);
+	ft_strdel(&(lst->old));
+	lst->old = ft_strdup(tmp);
+	free(tmp);
 }
 
 int		condition(t_fd *lst, int fd, char **line)
@@ -53,15 +68,16 @@ int		condition(t_fd *lst, int fd, char **line)
 			fonction_1(line, lst, buffer, 1);
 		else
 		{
-			lst->old = ft_strjoin(lst->old, buffer);
+			save_join(lst, buffer);
 			get_next_line(fd, line);
 		}
 	}
 	else if (n == 0)
 	{
-		if (lst->old != NULL)
+		if (lst->old != NULL && ft_strcmp(lst->old, ""))
 			fonction_1(line, lst, lst->old, 3);
-		return (0);
+		else
+			return (0);
 	}
 	else
 		return (-1);
